@@ -31,6 +31,20 @@ module.exports = {
     this.fileLookup = {};
   },
 
+  setupPreprocessorRegistry(type, registry) {
+    if (!this._isCoverageEnabled()) {
+      return;
+    }
+
+    const TemplateInstrumenter = require('./lib/template-instrumenter');
+
+    registry.add('htmlbars-ast-plugin', {
+      name: 'template-instrumenter',
+      plugin: TemplateInstrumenter,
+      baseDir: __dirname,
+    });
+  },
+
   included(appOrAddon) {
     this._super.included.apply(this, arguments);
 
@@ -200,14 +214,29 @@ module.exports = {
       this.project.findAddonByName('ember-cli-typescript');
     if (fs.existsSync(dir)) {
       let dirname = path.relative(this.project.root, dir);
-      let globs = this.parentRegistry.extensionsForType('js').map(extension => `**/*.${extension}`);
 
-      return walkSync(dir, { directories: false, globs }).map(file => {
+      let jsGlobs = this.parentRegistry
+        .extensionsForType('js')
+        .map(extension => `**/*.${extension}`);
+
+      let jsFiles = walkSync(dir, { directories: false, globs: jsGlobs }).map(file => {
         const postfix = hasEmberCliTypescript ? file : file.replace(EXT_RE, '.js');
         const module = prefix + '/' + postfix;
         this.fileLookup[module] = path.join(dirname, file);
         return module;
       });
+
+      let hbsGlobs = this.parentRegistry
+        .extensionsForType('template')
+        .map(extension => `**/*.${extension}`);
+
+      let hbsFiles = walkSync(dir, { directories: false, globs: hbsGlobs }).map(file => {
+        const module = prefix + '/' + file;
+        this.fileLookup[module] = path.join(dirname, file);
+        return module;
+      });
+
+      return [...jsFiles, ...hbsFiles];
     } else {
       return [];
     }

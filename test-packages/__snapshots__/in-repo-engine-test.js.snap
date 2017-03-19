@@ -54,6 +54,32 @@ Object {
       "total": 4,
     },
   },
+  "app/templates/application.hbs": Object {
+    "branches": Object {
+      "covered": 0,
+      "pct": 0,
+      "skipped": 0,
+      "total": 0,
+    },
+    "functions": Object {
+      "covered": 0,
+      "pct": 0,
+      "skipped": 0,
+      "total": 0,
+    },
+    "lines": Object {
+      "covered": 0,
+      "pct": 0,
+      "skipped": 0,
+      "total": 0,
+    },
+    "statements": Object {
+      "covered": 0,
+      "pct": 0,
+      "skipped": 0,
+      "total": 0,
+    },
+  },
   "app/utils/my-covered-util-app.js": Object {
     "branches": Object {
       "covered": 0,
@@ -170,6 +196,32 @@ Object {
       "pct": 0,
       "skipped": 0,
       "total": 1,
+    },
+    "lines": Object {
+      "covered": 0,
+      "pct": 0,
+      "skipped": 0,
+      "total": 0,
+    },
+    "statements": Object {
+      "covered": 0,
+      "pct": 0,
+      "skipped": 0,
+      "total": 0,
+    },
+  },
+  "lib/my-in-repo-engine/addon/templates/application.hbs": Object {
+    "branches": Object {
+      "covered": 0,
+      "pct": 0,
+      "skipped": 0,
+      "total": 0,
+    },
+    "functions": Object {
+      "covered": 0,
+      "pct": 0,
+      "skipped": 0,
+      "total": 0,
     },
     "lines": Object {
       "covered": 0,

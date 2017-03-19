@@ -24,7 +24,9 @@ function writeCoverage(coverage, fileLookup, root, map) {
   // Convert absolute paths (path to process.cwd + module path) to relative (module) paths, when necessary (babel >6)
   // eg. /Users/user/apps/my-ember-app/my-ember-app/app.js => my-ember-app/app.js
   const fixedCoverage = Object.keys(coverage).reduce((memo, filePath) => {
-    const modulePath = path.relative(root, filePath).split(path.sep).join('/');
+    const modulePath = path.isAbsolute(filePath)
+      ? path.relative(root, filePath).split(path.sep).join('/')
+      : filePath;
     memo[modulePath] = Object.assign({}, coverage[filePath], { path: modulePath });
     return memo;
   }, {});
